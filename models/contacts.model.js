@@ -9,6 +9,7 @@ const contactsSchema = new Schema({
     name: {
         type: String,
         required: true,
+        unique: true,
     },
     number: {
         type: Number,

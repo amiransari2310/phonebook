@@ -34,7 +34,7 @@ const listContacts = async (req, res) => {
             sortOn[key] = val;
         }
         const skip = count && page ? count * page : 0;
-        const query = filter ? {...JSON.parse(filter), ...defaultFilters } : { ...defaultFilters };
+        const query = filter ? { ...JSON.parse(filter), ...defaultFilters } : { ...defaultFilters };
         const selecteOrExclude = select ? select.replace(/\,/g, ' ') : '';
         const data = await listDataFromDb(query, sortOn, selecteOrExclude, skip, count, 'contacts');
         sendSuccessResponse(
