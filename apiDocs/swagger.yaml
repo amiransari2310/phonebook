@@ -1,0 +1,504 @@
+swagger: "2.0"
+info:
+  description: "This is the Open API Specification for shopping-portal Service"
+  version: "1.0.0"
+  title: "Shopping Portal Service"
+  contact:
+    email: "amiransari2310@gmail.com"
+host: "localhost:3000"
+basePath: "/"
+securityDefinitions:
+  token:
+    description: ''
+    type: apiKey
+    name: Authorization
+    in: header
+schemes:
+- "http" 
+paths:
+  /users:
+    get:
+      tags:
+      - "Users"
+      summary: "Get All Users By Params"
+      operationId: "listUsers"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "filter"
+        in: "query"
+        description: "Valid stringify JSON object as basic mongo query filter"
+        type: "string"
+      - name: "sort"
+        in: "query"
+        description: "Valid field from collection to sort documents"
+        type: "string"
+      - name: "page"
+        in: "query"
+        description: "valid number as a page number for pagination"
+        type: "string"
+      - name: "count"
+        in: "query"
+        description: "Valid number as number of documents to be return"
+        type: "string"
+      responses:
+        200:
+          description: "Successful GET All Users"
+          schema:
+            $ref: "#/definitions/response"
+        500:
+          description: "Server Error In GET All Users"
+          schema:
+            $ref: "#/definitions/errorResponse"
+        403:
+          description: "Unauthorized Access Error In GET All Users"
+          schema:
+            $ref: "#/definitions/errorResponse"
+        400:
+          description: "Missing Token Error In Users"
+          schema:
+            $ref: "#/definitions/errorResponse"
+      security:
+        - token: []
+  /users/{id}:
+    get:
+      tags:
+      - "Users"
+      summary: "Get User By Id"
+      operationId: "getUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        description: "Valid document id"
+        type: "string"
+      responses:
+        200:
+          description: "Successful GET By Id In Users"
+          schema:
+            $ref: "#/definitions/response"
+        500:
+          description: "Server Error In GET By Id In Users"
+          schema:
+            $ref: "#/definitions/errorResponse"
+        403:
+          description: "Unauthorized Access Error In GET By Id In Users"
+          schema:
+            $ref: "#/definitions/errorResponse"
+        400:
+          description: "Missing Token Error In GET By Id In Users"
+          schema:
+            $ref: "#/definitions/errorResponse"
+      security:
+        - token: []
+    put:
+      tags:
+      - "Users"
+      summary: "Update a User"
+      operationId: "update"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        description: "Valid document id"
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Valid User Object to Update in Db"
+        required: true
+        schema:
+          $ref: "#/definitions/user"
+      responses:
+        200:
+          description: "Successful Update User"
+          schema:
+            $ref: "#/definitions/response"
+        500:
+          description: "Server Error In Update User"
+          schema:
+            $ref: "#/definitions/errorResponse"
+        403:
+          description: "Unauthorized Access Error In Update Users"
+          schema:
+            $ref: "#/definitions/errorResponse"
+        400:
+          description: "Missing Token Error In Update Users"
+          schema:
+            $ref: "#/definitions/errorResponse"
+      security:
+        - token: []
+    delete:
+      tags:
+      - "Users"
+      summary: "Delete User By Id"
+      operationId: "removeUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        description: "Valid document id"
+        type: "string"
+      responses:
+        200:
+          description: "Successful Remove By Id In Users"
+          schema:
+            $ref: "#/definitions/response"
+        500:
+          description: "Server Error In Remove By Id In Users"
+          schema:
+            $ref: "#/definitions/errorResponse"
+        403:
+          description: "Unauthorized Access Error In Remove Users"
+          schema:
+            $ref: "#/definitions/errorResponse"
+        400:
+          description: "Missing Token Error In Remove Users"
+          schema:
+            $ref: "#/definitions/errorResponse"
+      security:
+        - token: [] 
+  /auth/login:
+    post:
+      tags:
+      - "Auth"
+      summary: "User Login"
+      operationId: "login"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "body"
+        in: "body"
+        description: "User Id and Password i.e Login Payload"
+        required: true
+        schema:
+          $ref: "#/definitions/login"
+      responses:
+        200:
+          description: "Successful Login"
+          schema:
+            $ref: "#/definitions/response"
+        500:
+          description: "Error In Login"
+          schema:
+            $ref: "#/definitions/errorResponse"
+        422:
+          description: "Error In Login"
+          schema:
+            $ref: "#/definitions/errorResponse"
+        400:
+          description: "Error In Login"
+          schema:
+            $ref: "#/definitions/errorResponse"
+  /auth/logout:
+    get:
+      tags:
+      - "Auth"
+      summary: "User Logout"
+      operationId: "logout"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Successful Logout"
+          schema:
+            $ref: "#/definitions/response"
+        500:
+          description: "Server Error In logout"
+          schema:
+            $ref: "#/definitions/errorResponse"
+        400:
+          description: "Missing Token Error In logout"
+          schema:
+            $ref: "#/definitions/errorResponse"
+      security:
+        - token: []
+  /auth/register:
+    post:
+      tags:
+      - "Auth"
+      summary: "Add/Register a new User"
+      operationId: "register"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Valid User Object to Insert in Db"
+        required: true
+        schema:
+          $ref: "#/definitions/user"
+      responses:
+        200:
+          description: "Successful User Create/Register"
+          schema:
+            $ref: "#/definitions/response"
+        500:
+          description: "Server Error In User Create/Register"
+          schema:
+            $ref: "#/definitions/errorResponse"
+        400:
+          description: "Missing Token/ Invalid Payload Error In User Create/Register"
+          schema:
+            $ref: "#/definitions/errorResponse"
+  /contacts:
+    get:
+      tags:
+      - "Contacts"
+      summary: "Get All Contacts By Params"
+      operationId: "listContacts"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "all"
+        in: "query"
+        description: "Value works only for admin, to show all contacts"
+        type: "boolean"
+      - name: "filter"
+        in: "query"
+        description: "Valid stringify JSON object as basic mongo query filter"
+        type: "string"
+      - name: "sort"
+        in: "query"
+        description: "Valid field from collection to sort documents"
+        type: "string"
+      - name: "page"
+        in: "query"
+        description: "valid number as a page number for pagination"
+        type: "string"
+      - name: "count"
+        in: "query"
+        description: "Valid number as number of documents to be return"
+        type: "string"
+      responses:
+        200:
+          description: "Successful GET All Contacts"
+          schema:
+            $ref: "#/definitions/response"
+        500:
+          description: "Server Error In GET All Contacts"
+          schema:
+            $ref: "#/definitions/errorResponse"
+        400:
+          description: "Missing Token Error In GET All Contacts"
+          schema:
+            $ref: "#/definitions/errorResponse"
+      security:
+        - token: []
+    post:
+      tags:
+      - "Contacts"
+      summary: "Add a new Contact"
+      operationId: "createContact"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Valid Contact Object to Insert in Db"
+        required: true
+        schema:
+          $ref: "#/definitions/contact"
+      responses:
+        200:
+          description: "Successful Contact Create"
+          schema:
+            $ref: "#/definitions/response"
+        500:
+          description: "Server Error In Contact Create"
+          schema:
+            $ref: "#/definitions/errorResponse"
+        400:
+          description: "Missing Token / Invalid Payload Error In Contact Create"
+          schema:
+            $ref: "#/definitions/errorResponse"
+      security:
+        - token: []
+  /contacts/{id}:
+    get:
+      tags:
+      - "Contacts"
+      summary: "Get Contact By Id"
+      operationId: "getContact"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        description: "Valid document id"
+        type: "string"
+      responses:
+        200:
+          description: "Successful GET By Id In Contacts"
+          schema:
+            $ref: "#/definitions/response"
+        500:
+          description: "Server Error In GET By Id In Contacts"
+          schema:
+            $ref: "#/definitions/errorResponse"
+        400:
+          description: "Missing Token Error In GET By Id In Contacts"
+          schema:
+            $ref: "#/definitions/errorResponse"
+      security:
+        - token: []
+    put:
+      tags:
+      - "Contacts"
+      summary: "Update a Contact"
+      operationId: "updateContact"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        description: "Valid document id"
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Valid Contact Object to Update in Db"
+        required: true
+        schema:
+          $ref: "#/definitions/contact"
+      responses:
+        200:
+          description: "Successful Update Contact"
+          schema:
+            $ref: "#/definitions/response"
+        500:
+          description: "Server Error In Update Contact"
+          schema:
+            $ref: "#/definitions/errorResponse"
+        400:
+          description: "Missing Token / Invalid Payload Error In Update Contact"
+          schema:
+            $ref: "#/definitions/errorResponse"
+      security:
+        - token: []
+    delete:
+      tags:
+      - "Contacts"
+      summary: "Delete Contact By Id"
+      operationId: "removeContact"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        description: "Valid document id"
+        type: "string"
+      responses:
+        200:
+          description: "Successful Remove By Id In Contacts"
+          schema:
+            $ref: "#/definitions/response"
+        500:
+          description: "Server Error In Remove By Id In Contacts"
+          schema:
+            $ref: "#/definitions/errorResponse"
+        400:
+          description: "Missing Token Error In Remove Contact"
+          schema:
+            $ref: "#/definitions/errorResponse"
+      security:
+        - token: []
+definitions:
+  response:
+    type: "object"
+    properties:
+      statusCode:
+        type: "integer"
+        format: "int64"
+        enum: 
+          - 200
+          - 204
+      status:
+        type: "string"
+        enum:
+          - "ok"
+      data:
+        type: "object"
+      message:
+        type: "string"
+  errorResponse:
+    type: "object"
+    properties:
+      statusCode:
+        type: "integer"
+        format: "int64"
+        enum: 
+          - 500
+          - 422
+          - 400
+          - 403
+      status:
+        type: "string"
+        enum:
+          - "error"
+          - "missingParam"
+          - "badRequest"
+          - "forbidden"
+      data:
+        type: "object"
+      message:
+        type: "string"
+  user:
+    type: "object"
+    properties:
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
+      userName:
+        type: "string"
+      emailId:
+        type: "string"
+      mobileNumber:
+        type: "integer"
+      password:
+        type: "string"
+      role:
+        type: "string"
+    required:
+    - "firstName"
+    - "userName"
+    - "emailId"
+    - "password"
+  login:
+    type: "object"
+    properties:
+      user:
+        type: "string"
+      password:
+        type: "string"
+    required:
+      - "user"
+      - "password"
+  contact:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      number:
+        type: "integer"
+    required:
+      - "name"
+      - "number"

@@ -26,7 +26,7 @@ const listContacts = async (req, res) => {
         });
         const userObject = authHelper.getUserObject(req);
         const { _id: user, role } = userObject;
-        const defaultFilters = all && role === 'admin' ? {} : { user };
+        const defaultFilters = all === 'true' && role === 'admin' ? {} : { user };
         let sortOn;
         if (sort) {
             const [key, val] = sort.trim()[0] === '-' ? [sort.trim().substr(1), -1] : [sort, 1];
@@ -123,7 +123,6 @@ const updateContact = async (req, res) => {
                     timeStamp: new Date().toString()
                 });
                 data = await updateDataInDb(req.params.id, req.body, 'contacts');
-                data.password = undefined;
                 sendSuccessResponse(
                     { req, res },
                     'ok',
