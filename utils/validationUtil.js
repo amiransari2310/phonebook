@@ -14,9 +14,6 @@ const validate = (payload, entity) => {
         case 'contacts':
             validationResponse = validateContactPayload(payload);
             break;
-        case 'carts':
-            validationResponse = validateCartPayload(payload);
-            break;
         default:
             validationResponse = {};
     }

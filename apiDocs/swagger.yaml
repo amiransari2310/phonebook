@@ -1,8 +1,8 @@
 swagger: "2.0"
 info:
-  description: "This is the Open API Specification for shopping-portal Service"
+  description: "This is the Open API Specification for phonebook Service"
   version: "1.0.0"
-  title: "Shopping Portal Service"
+  title: "Phonebook Portal Service"
   contact:
     email: "amiransari2310@gmail.com"
 host: "localhost:3000"

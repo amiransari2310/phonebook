@@ -1,10 +1,10 @@
 {
     "test": {
-        "secretKey": "THISISTHESECRETKEYFORSHOPPINGPORTALAPI",
+        "secretKey": "THISISTHESECRETKEYFORPHONEBOOKPORTALAPI",
         "expiresIn": "24h"
     },
     "development": {
-        "secretKey": "THISISTHESECRETKEYFORSHOPPINGPORTALAPI",
+        "secretKey": "THISISTHESECRETKEYFORPHONEBOOKPORTALAPI",
         "expiresIn": "24h"
     }
 }
